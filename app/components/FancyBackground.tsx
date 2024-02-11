@@ -55,19 +55,17 @@ const FancyBackground: React.FC = () => {
             content={"Regenerate the background pattern"}
             placement="right"
           >
-            <div>
-              <button
-                onClick={() => setSeed(generateSeed())}
-                arial-label="Regenerate the background pattern"
-                className={clsx(
-                  "gtm-background-refresh-button",
-                  styles.refreshButton
-                )}
-                type="reset"
-              >
-                <FaSync />
-              </button>
-            </div>
+            <button
+              onClick={() => setSeed(generateSeed())}
+              arial-label="Regenerate the background pattern"
+              className={clsx(
+                "gtm-background-refresh-button",
+                styles.refreshButton
+              )}
+              type="reset"
+            >
+              <FaSync />
+            </button>
           </Tippy>
         </>
       )}
