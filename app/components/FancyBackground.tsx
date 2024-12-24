@@ -14,14 +14,17 @@ import Tippy from "@tippyjs/react";
 
 // Borrowed from https://codepen.io/georgedoescode/pen/YzxrRZe
 const generateSeed = () => Math.random() * 10000;
-const workletURL =
-  "https://unpkg.com/@georgedoescode/fluid-pattern-worklet@1.0.1/worklet.bundle.js";
+const workletURL = "https://unpkg.com/@georgedoescode/fluid-pattern-worklet@1.0.1/worklet.bundle.js";
 
 const FancyBackground: React.FC = () => {
   const document = useDocument();
-  const [seed, setSeed] = useState(
-    !isSSR && (window as any)?.CSS?.paintWorklet ? generateSeed() : undefined
-  );
+  const [seed, setSeed] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (!isSSR && (window as any)?.CSS?.paintWorklet) {
+      setSeed(generateSeed());
+    }
+  }, []);
 
   useEffect(() => {
     if (document) {
@@ -50,18 +53,11 @@ const FancyBackground: React.FC = () => {
             }}
             className={styles.canvas}
           />
-          <Tippy
-            delay={[0, 50]}
-            content={"Regenerate the background pattern"}
-            placement="right"
-          >
+          <Tippy delay={[0, 50]} content={"Regenerate the background pattern"} placement="right">
             <button
               onClick={() => setSeed(generateSeed())}
               arial-label="Regenerate the background pattern"
-              className={clsx(
-                "gtm-background-refresh-button",
-                styles.refreshButton
-              )}
+              className={clsx("gtm-background-refresh-button", styles.refreshButton)}
               type="reset"
             >
               <FaSync />
